@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package bills;
+
+import "google/protobuf/empty.proto";
+
+message Bill {
+  string id = 1;
+  string status = 2;
+  string amount = 3;
+  string userId = 4;
+  string createdAt = 5;
+  string updatedAt = 6;
+  string deletedAt = 7;
+}
+
+message CreateBillRequest {
+  string status = 1;
+  string amount = 2;
+  string userId = 3;
+}
+
+message GetBillRequest { string id = 1; }
+
+message UpdateBillRequest { string status = 2; }
+
+message DeleteBillRequest { string id = 1; }
+
+message ListBillsRequest {
+  string userId = 1;
+  string statusFilter = 2;
+}
+
+message ListBillsResponse { repeated Bill bills = 1; }
+
+service Bills {
+  rpc CreateBill(CreateBillRequest) returns (Bill);
+  rpc GetBill(GetBillRequest) returns (Bill);
+  rpc UpdateBill(UpdateBillRequest) returns (Bill);
+  rpc DeleteBill(DeleteBillRequest) returns (google.protobuf.Empty);
+  rpc ListBills(ListBillsRequest) returns (ListBillsResponse);
+}
