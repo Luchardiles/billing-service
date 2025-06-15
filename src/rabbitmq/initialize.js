@@ -9,6 +9,4 @@ async function initializeConsumers() {
     }
 }
 
-module.exports = {
-    initializeConsumers
-};
+module.exports = initializeConsumers;
