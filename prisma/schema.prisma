@@ -15,6 +15,12 @@ model Bill {
     updatedAt DateTime  @updatedAt
     deletedAt DateTime?
     userId    String
+    user      User      @relation(fields: [userId], references: [id])
 
     @@index([amount])
+}
+
+model User {
+  id String @id @default(uuid())
+  bills Bill[] @relation()
 }
