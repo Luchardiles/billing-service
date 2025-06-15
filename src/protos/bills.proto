@@ -33,7 +33,7 @@ message ListBillsRequest {
 
 message ListBillsResponse { repeated Bill bills = 1; }
 
-service Bills {
+service Billing {
   rpc CreateBill(CreateBillRequest) returns (Bill);
   rpc GetBill(GetBillRequest) returns (Bill);
   rpc UpdateBill(UpdateBillRequest) returns (Bill);
