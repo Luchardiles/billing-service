@@ -1,6 +1,8 @@
 const { Server } = require("@grpc/grpc-js");
 const initializeConsumers = require("./rabbitmq/initialize");
-const { grpcErrorHandler } = require("./middlewares/grpcErrorHandlerMiddleware");
+const {
+  grpcErrorHandler,
+} = require("./middlewares/grpcErrorHandlerMiddleware");
 const loadProto = require("./utils/loadProto");
 const billingService = require("./services/billingService");
 
