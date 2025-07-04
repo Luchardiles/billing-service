@@ -1,13 +1,14 @@
 const {connectRabbit} = require("./connection");
-const {emailUpdatedQueue} = require("../config/env");
+const {videoUpdatedQueue} = require("../config/env");
 
-async function publishEmailUpdatedEvent(emailData) {
+
+async function publishVideoUpdatedEvent(videoId, updatedData) {
     const ch = await connectRabbit();
-    await ch.assertQueue(emailUpdatedQueue, { durable: true });
-    const payload = JSON.stringify(emailData);
-    ch.sendToQueue(emailUpdatedQueue, Buffer.from(payload), { persistent: true });
+    await ch.assertQueue(videoUpdatedQueue, { durable: true });
+    const payload = JSON.stringify({ id: videoId, ...updatedData });
+    ch.sendToQueue(videoUpdatedQueue, Buffer.from(payload), { persistent: true });
 }
 
 module.exports = {
-    publishEmailUpdatedEvent
+    publishVideoUpdatedEvent
 };
