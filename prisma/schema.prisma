@@ -12,7 +12,7 @@ model Bill {
     status  String
     amount    Float
     createdAt DateTime  @default(now())
-    updatedAt DateTime  @updatedAt
+    updatedAt DateTime?  @updatedAt
     deletedAt DateTime?
     userId    String
     user      User      @relation(fields: [userId], references: [id])
