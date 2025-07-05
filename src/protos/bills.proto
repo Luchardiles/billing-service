@@ -2,41 +2,79 @@ syntax = "proto3";
 
 package bills;
 
-import "google/protobuf/empty.proto";
-
 message Bill {
   string id = 1;
   string status = 2;
-  string amount = 3;
+  int32 amount = 3;
   string userId = 4;
-  string createdAt = 5;
-  string updatedAt = 6;
-  string deletedAt = 7;
+  string emissionDate = 5;
+  string paymentDate = 6;
 }
 
 message CreateBillRequest {
   string status = 1;
   string amount = 2;
   string userId = 3;
+  string requestorRole = 4;
 }
 
-message GetBillRequest { string id = 1; }
+message CreateBillDataResponse {
+  string id = 1;
+  string status = 2;
+  int32 amount = 3;
+  string userId = 4;
+  string emissionDate = 5;
+}
 
-message UpdateBillRequest { string status = 2; }
+message CreateBillResponse {
+  string status = 1;
+  CreateBillDataResponse data = 2;
+}
 
-message DeleteBillRequest { string id = 1; }
+message GetBillRequest {
+  string id = 1;
+  string requestorId = 2;
+  string requestorRole = 3;
+}
+
+message GetBillResponse {
+  string status = 1;
+  Bill data = 2;
+}
+
+message UpdateBillRequest {
+  string id = 1;
+  string status = 2;
+  string requestorRole = 3;
+}
+
+message UpdateBillResponse {
+  string status = 1;
+  Bill data = 2;
+}
+
+message DeleteBillRequest {
+  string id = 1;
+  string requestorRole = 2;
+}
+
+message DeleteBillResponse { string status = 1; }
 
 message ListBillsRequest {
-  string userId = 1;
-  string statusFilter = 2;
+  string statusFilter = 1;
+  string requestorId = 2;
+  string requestorRole = 3;
 }
 
-message ListBillsResponse { repeated Bill bills = 1; }
+message ListBillsResponse {
+  string status = 1;
+  repeated Bill data = 2;
+}
 
 service Billing {
-  rpc CreateBill(CreateBillRequest) returns (Bill);
-  rpc GetBill(GetBillRequest) returns (Bill);
-  rpc UpdateBill(UpdateBillRequest) returns (Bill);
-  rpc DeleteBill(DeleteBillRequest) returns (google.protobuf.Empty);
+  rpc CreateBill(CreateBillRequest) returns (CreateBillResponse);
+  rpc GetBill(GetBillRequest) returns (GetBillResponse);
+  rpc UpdateBill(UpdateBillRequest) returns (UpdateBillResponse);
+  rpc DeleteBill(DeleteBillRequest) returns (DeleteBillResponse);
   rpc ListBills(ListBillsRequest) returns (ListBillsResponse);
 }
